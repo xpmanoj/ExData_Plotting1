@@ -10,9 +10,13 @@ unlink(temp)
 
 #Subset for the respective dates
 dt_sub = dt[dt$Date == "1/2/2007" | dt$Date == "2/2/2007",]
+nrow(dt_sub) # no of rows after subsetting
+dt_sub[,DateTime:= as.POSIXct(paste(dt_sub$Date,dt_sub$Time), format = "%d/%m/%Y %H:%M:%S")]
+
 #Open PNG file
-png(filename='plot1.png')
+png(filename='plot2.png')
 # Make plot
-#Plot on screen first and then save as a PNG
-hist(dt_sub$Global_active_power, xlab = "Global Active Power (kilowatts)", main= "Global Active Power", col ="red")  
-dev.off()  
+plot(dt_sub$DateTime,dt_sub$Global_active_power,
+ylab="Global Active Power (kilowatts)", xlab="", type='l')
+#Turn off device
+dev.off()
